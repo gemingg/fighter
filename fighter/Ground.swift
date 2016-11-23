@@ -20,12 +20,12 @@ class Ground:SKSpriteNode, GameSprite{
     
     
     
-    func spawn(parentNode: SKNode, position: CGPoint, size: CGSize) {
+    func spawn(_ parentNode: SKNode, position: CGPoint, size: CGSize) {
         parentNode.addChild(self)
         self.size = size
         self.position = position
         //锚点为左上角
-        self.anchorPoint = CGPointMake(0, 1)
+        self.anchorPoint = CGPoint(x: 0, y: 1)
         
         if groundTexture == nil{
             groundTexture = textureAtlas.textureNamed("ice-tile.png")
@@ -36,7 +36,7 @@ class Ground:SKSpriteNode, GameSprite{
         
         let pointTopRight = CGPoint(x: size.width, y: 0)
         //物理体是顶部的一条线
-        self.physicsBody = SKPhysicsBody(edgeFromPoint: CGPointZero, toPoint: pointTopRight)
+        self.physicsBody = SKPhysicsBody(edgeFrom: CGPoint.zero, to: pointTopRight)
         
         
         self.physicsBody?.categoryBitMask = PhysicsCategory.ground.rawValue
@@ -63,10 +63,10 @@ class Ground:SKSpriteNode, GameSprite{
                 
                 tileNode.position.x = tileCount * tileSize.width
                 
-                tileNode.anchorPoint = CGPointMake(0, 1)
+                tileNode.anchorPoint = CGPoint(x: 0, y: 1)
                 self.addChild(tileNode)
                 
-                tileCount++
+                tileCount += 1
             }
             //正好是一个屏幕的宽度
             jumpWidth = tileSize.width * floor(tileCount / 3)
@@ -78,12 +78,12 @@ class Ground:SKSpriteNode, GameSprite{
         
     }
     
-    func checkForReposition(playerProgress:CGFloat){
+    func checkForReposition(_ playerProgress:CGFloat){
         let groundJumpPosition = jumpWidth * jumpCount
         //始终保持中间部分在屏幕上
         if playerProgress >= groundJumpPosition{
             self.position.x += jumpWidth
-            jumpCount++
+            jumpCount += 1
         }
     }
 }

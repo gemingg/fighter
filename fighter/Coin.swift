@@ -16,7 +16,7 @@ class Coin: SKSpriteNode,GameSprite {
     let coinSound = SKAction.playSoundFileNamed("Coin.aif", waitForCompletion: false)
     
     
-    func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 26, height: 26)) {
+    func spawn(_ parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 26, height: 26)) {
         
         parentNode.addChild(self)
         self.size = size
@@ -46,13 +46,13 @@ class Coin: SKSpriteNode,GameSprite {
         self.physicsBody?.categoryBitMask = 0
         
         let collectAnimation = SKAction.group([
-            SKAction.fadeAlphaTo(0, duration: 0.2),//0.2秒之内变成透明的
-            SKAction.scaleTo(1.5, duration: 0.2),//0.2秒之内变大至1.5倍
+            SKAction.fadeAlpha(to: 0, duration: 0.2),//0.2秒之内变成透明的
+            SKAction.scale(to: 1.5, duration: 0.2),//0.2秒之内变大至1.5倍
             //以垂直向上的方向移动0.2秒，CGVector表示一个矢量，有x，y 方向
-            SKAction.moveBy(CGVector(dx: 0, dy: 25), duration: 0.2)
+            SKAction.move(by: CGVector(dx: 0, dy: 25), duration: 0.2)
             ])
         
-        let resetAfterCollected = SKAction.runBlock{
+        let resetAfterCollected = SKAction.run{
             self.position.y = 5000
             self.alpha = 1
             self.xScale = 1
@@ -67,8 +67,8 @@ class Coin: SKSpriteNode,GameSprite {
             resetAfterCollected
             ])
         
-        self.runAction(collectSequence)
+        self.run(collectSequence)
         
-        self.runAction(coinSound)
+        self.run(coinSound)
     }
 }

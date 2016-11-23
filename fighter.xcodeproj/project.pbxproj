@@ -339,15 +339,18 @@
 					6EF37EE01C15CAEF006D4824 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = ZVYZ4R445U;
+						LastSwiftMigration = 0810;
 					};
 					6EF37EF81C15CAEF006D4824 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = FZ5ACA7MZ3;
+						LastSwiftMigration = 0810;
 						TestTargetID = 6EF37EE01C15CAEF006D4824;
 					};
 					6EF37F031C15CAEF006D4824 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = FZ5ACA7MZ3;
+						LastSwiftMigration = 0810;
 						TestTargetID = 6EF37EE01C15CAEF006D4824;
 					};
 				};
@@ -592,12 +595,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZVYZ4R445U;
 				INFOPLIST_FILE = fighter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gem.ios.2015.weng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -607,11 +612,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZVYZ4R445U;
 				INFOPLIST_FILE = fighter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gem.ios.2015.weng;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -624,6 +631,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gem.ios.2015.fighterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fighter.app/fighter";
 			};
 			name = Debug;
@@ -636,6 +644,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gem.ios.2015.fighterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fighter.app/fighter";
 			};
 			name = Release;
@@ -648,6 +657,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gem.ios.2015.fighterUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = fighter;
 				USES_XCTRUNNER = YES;
 			};
@@ -660,6 +670,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gem.ios.2015.fighterUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = fighter;
 				USES_XCTRUNNER = YES;
 			};

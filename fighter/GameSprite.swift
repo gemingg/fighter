@@ -13,7 +13,7 @@ protocol GameSprite {
     //图片对象集合
     var textureAtlas: SKTextureAtlas{get set}
     //生成游戏元素对象 parentNode : 父对象（容器对象）, position: 出现在父对象中的位置, size: 自身的大小尺寸
-    func spawn(parentNode : SKNode, position: CGPoint, size: CGSize)
+    func spawn(_ parentNode : SKNode, position: CGPoint, size: CGSize)
     //单击事件
     func onTap()
     

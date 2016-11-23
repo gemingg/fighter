@@ -41,7 +41,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     
     
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
 //        let mySprite = SKSpriteNode(color:UIColor.blueColor(), size: CGSize(width: 50, height: 50))
 //        
 //        mySprite.position = CGPoint(x: 300, y: 300)
@@ -168,7 +168,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         backgrounds[3].spawn(world, imageName: "Background-4", zPosition: -20, movementMultiplier: 0.1)
         
-        self.runAction(SKAction.playSoundFileNamed("StartGame.aif", waitForCompletion: false))
+        self.run(SKAction.playSoundFileNamed("StartGame.aif", waitForCompletion: false))
         
     }
     
@@ -197,29 +197,29 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         ]
         
         
-        let flyAction = SKAction.animateWithTextures(beeFrames, timePerFrame: 0.14)
+        let flyAction = SKAction.animate(with: beeFrames, timePerFrame: 0.14)
         
-        let beeAction = SKAction.repeatActionForever(flyAction)
-        
-        
-        bee.runAction(beeAction)
+        let beeAction = SKAction.repeatForever(flyAction)
         
         
-        let pathLeft = SKAction.moveByX(-200, y: -10, duration: 2)
-        
-        let pathRight = SKAction.moveByX(200, y: 10, duration: 2)
+        bee.run(beeAction)
         
         
-        let flipTextureNegative = SKAction.scaleXTo(-1, duration: 0)
-        let flipTexturePositive = SKAction.scaleXTo(1, duration: 0)
+        let pathLeft = SKAction.moveBy(x: -200, y: -10, duration: 2)
+        
+        let pathRight = SKAction.moveBy(x: 200, y: 10, duration: 2)
+        
+        
+        let flipTextureNegative = SKAction.scaleX(to: -1, duration: 0)
+        let flipTexturePositive = SKAction.scaleX(to: 1, duration: 0)
         
         
         let flightOfTheBee = SKAction.sequence([pathLeft,flipTextureNegative,pathRight,flipTexturePositive])
         
         
-        let neverEndingFlight = SKAction.repeatActionForever(flightOfTheBee)
+        let neverEndingFlight = SKAction.repeatForever(flightOfTheBee)
         
-        bee.runAction(neverEndingFlight)
+        bee.run(neverEndingFlight)
         
     }
     
@@ -280,7 +280,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        /* Called when a touch begins */
 //        
 //        for touch in touches {
@@ -299,10 +299,10 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
 //            self.addChild(sprite)
 //        }
         
-        for touch in (touches as! Set<UITouch>){
-            let location = touch.locationInNode(self)
+        for touch in (touches ){
+            let location = touch.location(in: self)
             
-            let nodeTouched = nodeAtPoint(location)
+            let nodeTouched = atPoint(location)
             
             if let gameSprite = nodeTouched as? GameSprite {
                 gameSprite.onTap()
@@ -312,13 +312,13 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             if nodeTouched.name == "restartGame"  {
                 self.view?.presentScene(
                 GameScene(size: self.size),
-                    transition: .crossFadeWithDuration(0.6)
+                    transition: .crossFade(withDuration: 0.6)
                 )
             }
             else if nodeTouched.name == "returnToMenu" {
                 self.view?.presentScene(
                     MenuScene(size:self.size),
-                transition:.crossFadeWithDuration(0.6)
+                transition:.crossFade(withDuration: 0.6)
                 )
             }
                 
@@ -330,15 +330,15 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     }
     
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         player.stopFlapping()
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         player.stopFlapping()
     }
    
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         /* Called before each frame is rendered */
         
         player.update()
@@ -373,7 +373,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     }
     
     
-    func didBeginContact(contact: SKPhysicsContact) {
+    func didBegin(_ contact: SKPhysicsContact) {
         let otherBody : SKPhysicsBody
         
         let penguinMask = PhysicsCategory.penguin.rawValue | PhysicsCategory.damagedPenguin.rawValue

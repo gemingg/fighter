@@ -7,6 +7,30 @@
 //
 
 import SpriteKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 //企鹅游戏元素类
 class Player: SKSpriteNode,GameSprite{
     
@@ -47,7 +71,7 @@ class Player: SKSpriteNode,GameSprite{
     
     
     
-    func spawn(parentNode : SKNode, position: CGPoint, size: CGSize = CGSize(width: 64, height: 64))
+    func spawn(_ parentNode : SKNode, position: CGPoint, size: CGSize = CGSize(width: 64, height: 64))
     {
         parentNode.addChild(self)
         
@@ -58,7 +82,7 @@ class Player: SKSpriteNode,GameSprite{
         self.position = position
         
         //self.runAction(flyAnimation,withKey: "flapAnimation")
-        self.runAction(soarAnimation,withKey: "soarAnimation")
+        self.run(soarAnimation,withKey: "soarAnimation")
         
         
         let bodyTexture = textureAtlas.textureNamed("pierre-flying-3.png")
@@ -90,25 +114,25 @@ class Player: SKSpriteNode,GameSprite{
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.velocity.dy = 50
         let startGravitySequence = SKAction.sequence([
-            SKAction.waitForDuration(0.6),
-            SKAction.runBlock{
+            SKAction.wait(forDuration: 0.6),
+            SKAction.run{
                 self.physicsBody?.affectedByGravity = true
             }
             ])
         
-        self.runAction(startGravitySequence)
+        self.run(startGravitySequence)
         
     }
     
     
     func createAnimations()
     {
-        let rotateUpAction = SKAction.rotateByAngle(0, duration: 0.475)
+        let rotateUpAction = SKAction.rotate(byAngle: 0, duration: 0.475)
         
-        rotateUpAction.timingMode = .EaseOut //刚开始快，后来慢慢慢下来
+        rotateUpAction.timingMode = .easeOut //刚开始快，后来慢慢慢下来
         
-        let rotateDownAction = SKAction.rotateToAngle(-1, duration: 0.8)
-        rotateDownAction.timingMode = .EaseIn //刚开始慢，后来慢慢快起来
+        let rotateDownAction = SKAction.rotate(toAngle: -1, duration: 0.8)
+        rotateDownAction.timingMode = .easeIn //刚开始慢，后来慢慢快起来
         
         let flyFrames: [SKTexture] = [
             textureAtlas.textureNamed("pierre-flying-1.png"),
@@ -119,44 +143,44 @@ class Player: SKSpriteNode,GameSprite{
             textureAtlas.textureNamed("pierre-flying-2.png")
         ]
         
-        let flyAction = SKAction.animateWithTextures(flyFrames, timePerFrame: 0.03)
+        let flyAction = SKAction.animate(with: flyFrames, timePerFrame: 0.03)
         
-        flyAnimation = SKAction.group([SKAction.repeatActionForever(flyAction),
+        flyAnimation = SKAction.group([SKAction.repeatForever(flyAction),
             rotateUpAction
         ])
         
         
         
         let soarFrames:[SKTexture] = [textureAtlas.textureNamed("pierre-flying-1.png")]
-        let soarAction = SKAction.animateWithTextures(soarFrames, timePerFrame: 1)
+        let soarAction = SKAction.animate(with: soarFrames, timePerFrame: 1)
         
         
-        soarAnimation = SKAction.group([SKAction.repeatActionForever(soarAction),rotateDownAction])
+        soarAnimation = SKAction.group([SKAction.repeatForever(soarAction),rotateDownAction])
         
-        let damageStart = SKAction.runBlock{
+        let damageStart = SKAction.run{
             self.physicsBody?.categoryBitMask = PhysicsCategory.damagedPenguin.rawValue
             self.physicsBody?.collisionBitMask = ~PhysicsCategory.enemy.rawValue
         }
         
         let slowFade = SKAction.sequence([
-            SKAction.fadeAlphaTo(0.3, duration: 0.35),
-            SKAction.fadeAlphaTo(0.7, duration: 0.35)
+            SKAction.fadeAlpha(to: 0.3, duration: 0.35),
+            SKAction.fadeAlpha(to: 0.7, duration: 0.35)
             
             ])
         
         let fastFade = SKAction.sequence([
-            SKAction.fadeAlphaTo(0.3, duration: 0.2),
-            SKAction.fadeAlphaTo(0.7, duration: 0.2)
+            SKAction.fadeAlpha(to: 0.3, duration: 0.2),
+            SKAction.fadeAlpha(to: 0.7, duration: 0.2)
             
             ])
         
         let fadeOutAndIn = SKAction.sequence([
-            SKAction.repeatAction(slowFade, count: 2),
-            SKAction.repeatAction(fastFade, count: 5),
-            SKAction.fadeAlphaTo(1, duration: 0.15)
+            SKAction.repeat(slowFade, count: 2),
+            SKAction.repeat(fastFade, count: 5),
+            SKAction.fadeAlpha(to: 1, duration: 0.15)
             ])
         
-        let damageEnd = SKAction.runBlock{
+        let damageEnd = SKAction.run{
             self.physicsBody?.categoryBitMask = PhysicsCategory.penguin.rawValue
             self.physicsBody?.collisionBitMask = 0xFFFFFFFF
             self.damaged = false
@@ -169,7 +193,7 @@ class Player: SKSpriteNode,GameSprite{
             
             ])
         
-        let startDie  = SKAction.runBlock{
+        let startDie  = SKAction.run{
             self.texture = self.textureAtlas.textureNamed("pierre-dead.png")
             
             self.physicsBody?.affectedByGravity = false
@@ -180,16 +204,16 @@ class Player: SKSpriteNode,GameSprite{
             
         }
         
-        let endDie = SKAction.runBlock{
+        let endDie = SKAction.run{
             self.physicsBody?.affectedByGravity = true
         }
         
         self.dieAnimation = SKAction.sequence([
             startDie,
-            SKAction.scaleTo(1.3, duration: 0.5),
-            SKAction.waitForDuration(0.5),
-            SKAction.rotateToAngle(3, duration: 1.5),
-            SKAction.waitForDuration(0.5),
+            SKAction.scale(to: 1.3, duration: 0.5),
+            SKAction.wait(forDuration: 0.5),
+            SKAction.rotate(toAngle: 3, duration: 1.5),
+            SKAction.wait(forDuration: 0.5),
             endDie
             ])
     }
@@ -228,8 +252,8 @@ class Player: SKSpriteNode,GameSprite{
         
         if self.health <= 0 { return }
         
-        self.removeActionForKey("soarAnimation")
-        self.runAction(flyAnimation, withKey: "flapAnimation")
+        self.removeAction(forKey: "soarAnimation")
+        self.run(flyAnimation, withKey: "flapAnimation")
         self.flapping = true
     }
     
@@ -237,8 +261,8 @@ class Player: SKSpriteNode,GameSprite{
     func stopFlapping(){
         if self.health <= 0 { return }
         
-        self.removeActionForKey("flapAnimation")
-        self.runAction(soarAnimation, withKey: "soarAnimation")
+        self.removeAction(forKey: "flapAnimation")
+        self.run(soarAnimation, withKey: "soarAnimation")
         self.flapping = false
     }
     
@@ -248,7 +272,7 @@ class Player: SKSpriteNode,GameSprite{
         
         self.removeAllActions()
         
-        self.runAction(self.dieAnimation)
+        self.run(self.dieAnimation)
         
         self.flapping = false
         
@@ -268,7 +292,7 @@ class Player: SKSpriteNode,GameSprite{
         
         self.damaged = true
         
-        self.health--
+        self.health -= 1
         
         if self.health == 0
         {
@@ -276,31 +300,31 @@ class Player: SKSpriteNode,GameSprite{
         }
         else
         {
-            self.runAction(self.damageAnimation)
+            self.run(self.damageAnimation)
         }
         
-        self.runAction(hurtSound)
+        self.run(hurtSound)
     }
     
     func starPower()
     {
-        self.removeActionForKey("starPower")
+        self.removeAction(forKey: "starPower")
         self.forwardVelocity = 400
         self.invulnerable = true
         
         let starSequence = SKAction.sequence([
-            SKAction.scaleTo(1.5, duration: 0.3),
-            SKAction.waitForDuration(8),
-            SKAction.scaleTo(1, duration: 1),
-            SKAction.runBlock{
+            SKAction.scale(to: 1.5, duration: 0.3),
+            SKAction.wait(forDuration: 8),
+            SKAction.scale(to: 1, duration: 1),
+            SKAction.run{
                 self.forwardVelocity = 200
                 self.invulnerable = false
             }
             ])
         
-        self.runAction(starSequence,withKey: "starPower")
+        self.run(starSequence,withKey: "starPower")
         
-        self.runAction(powerupSound)
+        self.run(powerupSound)
         
     }
     

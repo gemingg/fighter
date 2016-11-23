@@ -12,7 +12,7 @@ class Blade : SKSpriteNode, GameSprite {
     var textureAtlas : SKTextureAtlas = SKTextureAtlas(named: "enemies.atlas")
     var spinAnimation = SKAction()
     
-    func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 185, height: 92)) {
+    func spawn(_ parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 185, height: 92)) {
         parentNode.addChild(self)
         self.size = size
         
@@ -21,10 +21,10 @@ class Blade : SKSpriteNode, GameSprite {
         self.physicsBody = SKPhysicsBody(texture: textureAtlas.textureNamed("blade-1.png"),  size: size)
         self.physicsBody?.affectedByGravity = false
         //不允许移动，固定的
-        self.physicsBody?.dynamic = false
+        self.physicsBody?.isDynamic = false
         
         createAnimations()
-        self.runAction(spinAnimation)
+        self.run(spinAnimation)
         
         self.physicsBody?.categoryBitMask = PhysicsCategory.enemy.rawValue
         self.physicsBody?.collisionBitMask = ~PhysicsCategory.damagedPenguin.rawValue
@@ -37,8 +37,8 @@ class Blade : SKSpriteNode, GameSprite {
             textureAtlas.textureNamed("blade-2.png")
         ]
         
-        let spinAction = SKAction.animateWithTextures(spinFrames, timePerFrame: 0.07)
-        spinAnimation = SKAction.repeatActionForever(spinAction)
+        let spinAction = SKAction.animate(with: spinFrames, timePerFrame: 0.07)
+        spinAnimation = SKAction.repeatForever(spinAction)
         
         
     }

@@ -13,7 +13,7 @@ class Ghost:SKSpriteNode,GameSprite{
     
     var fadeAnimation = SKAction()
     
-    func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 30, height: 44)) {
+    func spawn(_ parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 30, height: 44)) {
         parentNode.addChild(self)
         
         createAnimations()
@@ -23,7 +23,7 @@ class Ghost:SKSpriteNode,GameSprite{
         self.physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2 )
         self.physicsBody?.affectedByGravity = false
         self.texture = textureAtlas.textureNamed("ghost-frown.png")
-        self.runAction(fadeAnimation)
+        self.run(fadeAnimation)
         
         self.alpha = 0.8
         
@@ -35,14 +35,14 @@ class Ghost:SKSpriteNode,GameSprite{
     func createAnimations()
     {
         let fadeOutGroup = SKAction.group([
-            SKAction.fadeAlphaTo(0.3, duration: 2),
-            SKAction.scaleTo(0.8, duration: 2)
+            SKAction.fadeAlpha(to: 0.3, duration: 2),
+            SKAction.scale(to: 0.8, duration: 2)
             ])
         
         
         let fadeInGroup = SKAction.group([
-            SKAction.fadeAlphaTo(0.8, duration: 2),
-            SKAction.scaleTo(1, duration: 2)
+            SKAction.fadeAlpha(to: 0.8, duration: 2),
+            SKAction.scale(to: 1, duration: 2)
             ])
         
         
@@ -50,7 +50,7 @@ class Ghost:SKSpriteNode,GameSprite{
             fadeOutGroup,fadeInGroup
             ])
         
-        fadeAnimation = SKAction.repeatActionForever(fadeSequence)
+        fadeAnimation = SKAction.repeatForever(fadeSequence)
     }
     
     func onTap() {

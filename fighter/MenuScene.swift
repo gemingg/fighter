@@ -13,7 +13,7 @@ class MenuScene :SKScene{
     
     let startButton = SKSpriteNode()
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         //锚点设置在界面中心处,skscene 的锚点默认是 0，0 。 sknode 的锚点默认是 0.5 ，0.5
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.backgroundColor = UIColor(red: 0.4, green: 0.6, blue: 0.95, alpha: 1.0)
@@ -43,7 +43,7 @@ class MenuScene :SKScene{
         
         let startText = SKLabelNode(fontNamed: "AvenirNext-HeavyItalic")
         startText.text = "开始游戏"//开始游戏
-        startText.verticalAlignmentMode = .Center
+        startText.verticalAlignmentMode = .center
         startText.position = CGPoint(x: 0, y: 2)
         startText.fontSize = 40
         startText.name = "StartBtn"
@@ -51,21 +51,21 @@ class MenuScene :SKScene{
         
         
         let pulseAction = SKAction.sequence([
-            SKAction.fadeAlphaTo(0.7, duration: 0.9),
-            SKAction.fadeAlphaTo(1, duration: 0.9)
+            SKAction.fadeAlpha(to: 0.7, duration: 0.9),
+            SKAction.fadeAlpha(to: 1, duration: 0.9)
             
             ])
         
-        startButton.runAction(SKAction.repeatActionForever(pulseAction))
+        startButton.run(SKAction.repeatForever(pulseAction))
         
     }
     
     //在界面上单击
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        for touch in (touches as! Set<UITouch>)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in (touches )
         {
-            let location = touch.locationInNode(self)
-            let nodeTouched = nodeAtPoint(location)
+            let location = touch.location(in: self)
+            let nodeTouched = atPoint(location)
             //根据单击的位置找出是不是按钮控件，如果是，则更换为游戏场景
             if nodeTouched.name == "StartBtn"  {
                 self.view?.presentScene(GameScene(size:self.size))

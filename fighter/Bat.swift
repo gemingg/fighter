@@ -15,13 +15,13 @@ class Bat:SKSpriteNode , GameSprite {
     //定义动画对象
     var flyAnimation = SKAction()
     
-    func spawn(parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 44, height: 24)) {
+    func spawn(_ parentNode: SKNode, position: CGPoint, size: CGSize = CGSize(width: 44, height: 24)) {
         parentNode.addChild(self)
         createAnimations()
         
         self.size = size
         self.position = position
-        self.runAction(flyAnimation)//执行动画
+        self.run(flyAnimation)//执行动画
         //定义物理效果体的范围为 以宽度一半为半径的一个圆（包含了自身，并超出了一点）
         self.physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2)
         //不受重力影响（可以漂浮在空中）
@@ -46,9 +46,9 @@ class Bat:SKSpriteNode , GameSprite {
             textureAtlas.textureNamed("bat-fly-2.png")
         ]
         //定义一个每隔0.06秒顺序显示图片数组中的一张图片的动画对象
-        let flyAction = SKAction.animateWithTextures(flyFrames, timePerFrame: 0.06)
+        let flyAction = SKAction.animate(with: flyFrames, timePerFrame: 0.06)
         //将类中的动画对象定义成永久循环播放上面的动画片的动画对象（动画对象可以嵌套）
-        flyAnimation = SKAction.repeatActionForever(flyAction)
+        flyAnimation = SKAction.repeatForever(flyAction)
     }
     
     func onTap() {

@@ -14,9 +14,9 @@ class Background: SKSpriteNode{
     
     let backgroundSize = CGSize(width: 1000, height: 1000)
     
-    func spawn(parentNode : SKNode , imageName: String, zPosition : CGFloat , movementMultiplier:CGFloat)
+    func spawn(_ parentNode : SKNode , imageName: String, zPosition : CGFloat , movementMultiplier:CGFloat)
     {
-        self.anchorPoint = CGPointZero
+        self.anchorPoint = CGPoint.zero
         self.position = CGPoint(x: 0 , y: 30)
         
         self.zPosition = zPosition
@@ -28,14 +28,14 @@ class Background: SKSpriteNode{
             let newBGNode = SKSpriteNode(imageNamed: imageName)
             newBGNode.size = backgroundSize
             
-            newBGNode.anchorPoint = CGPointZero
+            newBGNode.anchorPoint = CGPoint.zero
             
             newBGNode.position = CGPoint(x: i * Int(backgroundSize.width), y: 0)
             self.addChild(newBGNode)
         }
     }
     
-    func updatePosition(playerProgress:CGFloat)
+    func updatePosition(_ playerProgress:CGFloat)
     {
         let adjustedPosition = jumpAdjustment + playerProgress * (1 - movementMultiplier)
         

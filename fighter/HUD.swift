@@ -21,7 +21,7 @@ class HUD : SKNode
     
     
     
-    func createHubNodes(screenSize:CGSize)
+    func createHubNodes(_ screenSize:CGSize)
     {
         let coinTextureAtlas:SKTextureAtlas = SKTextureAtlas(named: "goods.atlas")
         let coinIcon = SKSpriteNode(texture: coinTextureAtlas.textureNamed("coin-bronze.png"))
@@ -35,14 +35,14 @@ class HUD : SKNode
         coinCountText.position = CGPoint(x: 41, y: coinYPos)
         
         
-        coinCountText.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-        coinCountText.verticalAlignmentMode = SKLabelVerticalAlignmentMode.Center
+        coinCountText.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        coinCountText.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         
         self.addChild(coinCountText)
         self.addChild(coinIcon)
         
         
-        for var index = 0 ; index < 4 ; ++index{
+        for index in 0  ..< 4  {
             let newHeartNode = SKSpriteNode(texture: textureAtlas.textureNamed("heart-full.png"))
             newHeartNode.size = CGSize(width: 46, height: 40)
             
@@ -71,25 +71,25 @@ class HUD : SKNode
         
     }
     //设置分数
-    func setCoinCountDisplay(newCoinCount:Int)
+    func setCoinCountDisplay(_ newCoinCount:Int)
     {
-        let formatter = NSNumberFormatter()
+        let formatter = NumberFormatter()
         formatter.minimumIntegerDigits = 6 //6位数
-        if let coinStr = formatter.stringFromNumber(newCoinCount){
+        if let coinStr = formatter.string(from:newCoinCount as NSNumber)  {
             coinCountText.text = coinStr
         }
     }
     //设置生命心的状态
-    func setHealthDisplay(newHealth: Int){
-        let fadeAction = SKAction.fadeAlphaTo(0.2, duration: 0.3)
+    func setHealthDisplay(_ newHealth: Int){
+        let fadeAction = SKAction.fadeAlpha(to: 0.2, duration: 0.3)
         
-        for var index = 0; index < heartNodes.count ; ++index {
+        for index in 0 ..< heartNodes.count   {
             if index < newHealth {
                 heartNodes[index].alpha = 1
             }
             else
             {
-                heartNodes[index].runAction(fadeAction)
+                heartNodes[index].run(fadeAction)
             }
         }
     }
@@ -102,8 +102,8 @@ class HUD : SKNode
         self.addChild(restartButton)
         self.addChild(menuButton)
         
-        let fadeAnimation = SKAction.fadeAlphaTo(1, duration: 0.4)
-        restartButton.runAction(fadeAnimation)
-        menuButton.runAction(fadeAnimation)
+        let fadeAnimation = SKAction.fadeAlpha(to: 1, duration: 0.4)
+        restartButton.run(fadeAnimation)
+        menuButton.run(fadeAnimation)
     }
 }

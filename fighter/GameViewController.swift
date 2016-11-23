@@ -31,11 +31,11 @@ class GameViewController: UIViewController {
         skView.presentScene(menuScene)
         
         //获得背景音乐资源对象
-        let musicUrl = NSBundle.mainBundle().URLForResource("BackgroundMusic", withExtension: "m4a")
+        let musicUrl = Bundle.main.url(forResource: "BackgroundMusic", withExtension: "m4a")
         
         if let url = musicUrl {
             do {
-                try musicPlayer = AVAudioPlayer(contentsOfURL: url)
+                try musicPlayer = AVAudioPlayer(contentsOf: url)
             }
             catch
             {
@@ -63,11 +63,11 @@ class GameViewController: UIViewController {
 //        skView.presentScene(scene)
     }
 
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
 //        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
 //            return .AllButUpsideDown
 //        } else {
@@ -77,7 +77,7 @@ class GameViewController: UIViewController {
         //portrait 标准竖屏，upside down 头脚颠倒的竖屏
         //landscape left home键在左边的横屏   landscape right  home键在右边的横屏
         
-        return .Landscape
+        return .landscape
     }
 
     override func didReceiveMemoryWarning() {
@@ -85,7 +85,7 @@ class GameViewController: UIViewController {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 }

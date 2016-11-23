@@ -92,7 +92,7 @@ class EncounterManager{
     }
     
     //将场景添加到world中
-    func addEncountersToWorld(world:SKNode)
+    func addEncountersToWorld(_ world:SKNode)
     {
         for index in 0 ... encounters.count - 1 {
             encounters[index].position = CGPoint(x: -2000, y: index * 1000)
@@ -101,11 +101,11 @@ class EncounterManager{
     }
     
     //将元素的坐标值保存下来
-    func saveSpritePositions(node:SKNode)
+    func saveSpritePositions(_ node:SKNode)
     {
         for sprite in node.children{
             if let spriteNode = sprite as? SKSpriteNode{
-                let initialPositionValue = NSValue(CGPoint:sprite.position)
+                let initialPositionValue = NSValue(cgPoint:sprite.position)
                 spriteNode.userData = ["initialPosition":initialPositionValue]
                 saveSpritePositions(spriteNode)
                 
@@ -115,7 +115,7 @@ class EncounterManager{
     }
     
     //重置场景元素
-    func resetSpritePositions(node:SKNode)
+    func resetSpritePositions(_ node:SKNode)
     {
         for sprite in node.children{
             if let spriteNode = sprite as? SKSpriteNode{
@@ -126,8 +126,8 @@ class EncounterManager{
                 //元素角度为0
                 spriteNode.zRotation = 0
                 
-                if let initialPositionVal = spriteNode.userData?.valueForKey("initialPosition") as? NSValue{
-                    spriteNode.position = initialPositionVal.CGPointValue()
+                if let initialPositionVal = spriteNode.userData?.value(forKey: "initialPosition") as? NSValue{
+                    spriteNode.position = initialPositionVal.cgPointValue
                 }
                 
                 
@@ -138,7 +138,7 @@ class EncounterManager{
     }
     
     //切换遭遇场景
-    func placeNextEncounter(currentXPos:CGFloat)
+    func placeNextEncounter(_ currentXPos:CGFloat)
     {
         let encounterCount = UInt32(encounters.count)
         
